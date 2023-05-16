@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "XTH5fcZSCLfItYLJdA/S90F6biv1yt9++QqITKjmgyWIErCl7Z/WTvdXqM8fD1yIvK/eyD07+AHN3M1nYwAnVw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\TaNbir\\Desktop\\alvy\\BlazorCSV\\BlazorCSV\\Shared\\BlazorCSV.Shared.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\TaNbir\\.nuget\\packages\\csvhelper\\30.0.1\\csvhelper.30.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

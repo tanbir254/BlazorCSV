@@ -1,0 +1,12 @@
+C:\Users\Sohel Reza\Desktop\Blazor\BlazorCSV\BlazorCSV\Shared\bin\Debug\net6.0\BlazorCSV.Shared.deps.json
+C:\Users\Sohel Reza\Desktop\Blazor\BlazorCSV\BlazorCSV\Shared\bin\Debug\net6.0\BlazorCSV.Shared.dll
+C:\Users\Sohel Reza\Desktop\Blazor\BlazorCSV\BlazorCSV\Shared\bin\Debug\net6.0\BlazorCSV.Shared.pdb
+C:\Users\Sohel Reza\Desktop\Blazor\BlazorCSV\BlazorCSV\Shared\obj\Debug\net6.0\BlazorCSV.Shared.csproj.AssemblyReference.cache
+C:\Users\Sohel Reza\Desktop\Blazor\BlazorCSV\BlazorCSV\Shared\obj\Debug\net6.0\BlazorCSV.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Sohel Reza\Desktop\Blazor\BlazorCSV\BlazorCSV\Shared\obj\Debug\net6.0\BlazorCSV.Shared.AssemblyInfoInputs.cache
+C:\Users\Sohel Reza\Desktop\Blazor\BlazorCSV\BlazorCSV\Shared\obj\Debug\net6.0\BlazorCSV.Shared.AssemblyInfo.cs
+C:\Users\Sohel Reza\Desktop\Blazor\BlazorCSV\BlazorCSV\Shared\obj\Debug\net6.0\BlazorCSV.Shared.csproj.CoreCompileInputs.cache
+C:\Users\Sohel Reza\Desktop\Blazor\BlazorCSV\BlazorCSV\Shared\obj\Debug\net6.0\BlazorCSV.Shared.dll
+C:\Users\Sohel Reza\Desktop\Blazor\BlazorCSV\BlazorCSV\Shared\obj\Debug\net6.0\refint\BlazorCSV.Shared.dll
+C:\Users\Sohel Reza\Desktop\Blazor\BlazorCSV\BlazorCSV\Shared\obj\Debug\net6.0\BlazorCSV.Shared.pdb
+C:\Users\Sohel Reza\Desktop\Blazor\BlazorCSV\BlazorCSV\Shared\obj\Debug\net6.0\ref\BlazorCSV.Shared.dll

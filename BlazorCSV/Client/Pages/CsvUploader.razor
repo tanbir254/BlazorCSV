@@ -1,0 +1,103 @@
+﻿@page "/csvFile"
+
+@using CsvHelper
+@using System.Collections.Generic
+@using System.Globalization
+@using System.IO
+@using System.Linq
+@using System.Threading.Tasks
+@inject IJSRuntime JSRuntime
+
+<h3>CSV Uploader</h3>
+
+<input type="file" id="csvFileInput" accept=".csv" />
+
+<button class="btn btn-primary" @onclick="HandleFileUpload">Upload</button>
+
+@if (CsvData != null)
+{
+    <h4>Uploaded CSV Data</h4>
+
+    <table class="table">
+        <thead>
+            <tr>
+                @foreach (var header in CsvData.FirstOrDefault()?.Keys)
+                {
+                    <th>@header</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var record in GetRecords())
+            {
+                <tr>
+                    @foreach (var field in record)
+                    {
+                        <td>@field.Value</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        <button class="btn btn-primary" disabled="@IsFirstPage" @onclick="LoadPreviousPage">Previous</button>
+        <span>@PageNumber</span>
+        <button class="btn btn-primary" disabled="@IsLastPage" @onclick="LoadNextPage">Next</button>
+    </div>
+}
+
+@code {
+    private List<Dictionary<string, string>> CsvData { get; set; }
+    private int PageNumber { get; set; } = 1;
+    private const int PageSize = 10; // Change as per your needs
+
+    private bool IsFirstPage => PageNumber == 1;
+    private bool IsLastPage => PageNumber == TotalPages;
+    private int TotalPages => (int)System.Math.Ceiling((double)CsvData?.Count / PageSize);
+
+    private IEnumerable<Dictionary<string, string>> GetRecords()
+    {
+        return CsvData?
+            .Skip((PageNumber - 1) * PageSize)
+            .Take(PageSize);
+    }
+
+    private async Task HandleFileUpload()
+    {
+        var element = await JSRuntime.InvokeAsync<ElementReference>("eval", "document.getElementById('csvFileInput')");
+        var files = await JSRuntime.InvokeAsync<string>("BlazorInputFile.getFileInfoArray", element);
+
+        if (files.Length > 0)
+        {
+            var file = files[0];
+            var stream = await JSRuntime.InvokeAsync<Stream>("BlazorInputFile.openFile", file.Id);
+            using (var reader = new StreamReader(stream))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                CsvData = csv.GetRecords<dynamic>()
+                    .Select(record => ((IDictionary<string, object>)record).ToDictionary(kv => kv.Key, kv => kv.Value.ToString()))
+                    .ToList();
+            }
+
+            PageNumber = 1;
+        }
+    }
+
+    private void LoadPreviousPage()
+    {
+        if (!IsFirstPage)
+        {
+            PageNumber--;
+        }
+    }
+
+    private void LoadNextPage()
+    {
+        if (!IsLastPage)
+        {
+            PageNumber++;
+        }
+    }
+
+}

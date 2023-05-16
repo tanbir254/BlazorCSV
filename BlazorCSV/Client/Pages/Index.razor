@@ -1,0 +1,103 @@
+﻿@page "/"
+@using Microsoft.VisualBasic.FileIO;
+@using System
+
+<h3>Upload and Preview CSV File</h3>
+
+@*<input type="file" onchange="@HandleFileSelection" />*@
+<InputFile OnChange="HandleFileSelection" class="btn-primary" />
+
+
+@if (fileData != null)
+{
+    <h4>File Preview:</h4>
+
+    <table class="table">
+        <thead>
+            <tr>
+                @foreach (var header in fileData.Headers)
+                {
+                    <th>@header</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var row in currentPage)
+            {
+                <tr>
+                    @foreach (var cell in row)
+                    {
+                        <td>@cell</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <nav>
+        <ul class="pagination">
+            @for (int i = 0; i < pageCount; i++)
+            {
+                <li class="page-item @(i == currentPageIndex ? "active" : "")">
+                    <button class="page-link" @onclick="() => ChangePage(i)">@i</button>
+                </li>
+            }
+        </ul>
+    </nav>
+}
+
+@code {
+    private CsvFileData fileData;
+    private List<List<string>> currentPage;
+    private int currentPageIndex = 0;
+    private int pageSize = 10;
+    private int pageCount;
+
+    private async Task HandleFileSelection(InputFileChangeEventArgs e)
+    {
+        Console.log(e);
+        var file = e.File;
+        var stream = file.OpenReadStream();
+        var parser = new TextFieldParser(stream);
+
+        parser.TextFieldType = FieldType.Delimited;
+        parser.SetDelimiters(",");
+
+        var rows = new List<List<string>>();
+        while (!parser.EndOfData)
+        {
+            var row = parser.ReadFields().ToList();
+            rows.Add(row);
+        }
+
+        fileData = new CsvFileData
+            {
+                Headers = rows.FirstOrDefault(),
+                Rows = rows.Skip(1).ToList()
+            };
+
+        currentPageIndex = 0;
+        pageCount = (int)Math.Ceiling((double)fileData.Rows.Count / pageSize);
+        UpdateCurrentPage();
+    }
+
+    private void ChangePage(int pageIndex)
+    {
+        currentPageIndex = pageIndex;
+        UpdateCurrentPage();
+    }
+
+    private void UpdateCurrentPage()
+    {
+        currentPage = fileData.Rows
+            .Skip(currentPageIndex * pageSize)
+            .Take(pageSize)
+            .ToList();
+    }
+
+    public class CsvFileData
+    {
+        public List<string> Headers { get; set; }
+        public List<List<string>> Rows { get; set; }
+    }
+}
